@@ -81,31 +81,31 @@ export function GameScreen() {
         </div>
 
         {showReserveReveal && (
-          <div className="mx-4 mb-2 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg shrink-0">
-            <div className="text-center text-sm font-bold text-amber-400 mb-2">
+          <div className="mx-4 mb-1 px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded-lg shrink-0">
+            <div className="text-center text-xs font-bold text-amber-400">
               Reserves Opened
             </div>
-            <div className="flex justify-center gap-4">
+            <div className="flex justify-center gap-3 mt-0.5">
               {state.players.map((p) => (
-                <div key={p.id} className="flex items-center gap-1.5 text-sm">
+                <div key={p.id} className="flex items-center gap-1 text-xs">
                   <div
-                    className="w-3 h-3 rounded-full"
+                    className="w-2 h-2 rounded-full"
                     style={{ backgroundColor: PLAYER_COLOR_HEX[p.color] }}
                   />
                   <span className="text-white font-semibold">
-                    ${p.reserve} / {RESERVE_CARD_SLOTS[p.reserve as ReserveChoice]} slots
+                    ${p.reserve}/{RESERVE_CARD_SLOTS[p.reserve as ReserveChoice]}
                   </span>
                 </div>
               ))}
             </div>
-            <div className="text-center text-xs text-amber-300 mt-2">
+            <div className="text-center text-[10px] text-amber-300 mt-0.5">
               All CEOs now have {state.ceoSlots} slots
             </div>
           </div>
         )}
 
         {/* Transaction log */}
-        <div className="min-h-0 mx-4 mb-2 bg-surface-raised rounded-lg border border-slate-800 overflow-hidden max-h-40">
+        <div className="min-h-0 flex-1 mx-4 mb-2 bg-surface-raised rounded-lg border border-slate-800 overflow-hidden">
           <TransactionLog transactions={state.transactions} players={state.players} />
         </div>
       </div>

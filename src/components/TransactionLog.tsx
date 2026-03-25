@@ -30,7 +30,7 @@ export function TransactionLog({ transactions, players }: Props) {
   }
 
   return (
-    <div ref={scrollRef} className="overflow-y-auto h-full px-3 py-2 space-y-1">
+    <div ref={scrollRef} className="overflow-y-auto h-full px-3 py-2 space-y-3">
       {transactions.map((tx) => {
         const isIncome = tx.amount > 0;
         return (

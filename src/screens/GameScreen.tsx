@@ -81,7 +81,7 @@ export function GameScreen() {
         </div>
 
         {showReserveReveal && (
-          <div className="mx-4 mb-1 px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded-lg shrink-0">
+          <div className="mx-4 mb-1 mt-1 px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded-lg shrink-0">
             <div className="text-center text-xs font-bold text-amber-400">
               Reserves Opened
             </div>
@@ -105,7 +105,7 @@ export function GameScreen() {
         )}
 
         {/* Transaction log */}
-        <div className="min-h-0 flex-1 mx-4 mb-2 bg-surface-raised rounded-lg border border-slate-800 overflow-hidden">
+        <div className="min-h-0 flex-1 mx-4 mb-2 mt-1 bg-surface-raised rounded-lg border border-slate-800 overflow-hidden">
           <TransactionLog transactions={state.transactions} players={state.players} />
         </div>
       </div>

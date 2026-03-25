@@ -3,6 +3,7 @@ import { SetupScreen } from './screens/SetupScreen';
 import { ReserveScreen } from './screens/ReserveScreen';
 import { GameScreen } from './screens/GameScreen';
 import { GameOverScreen } from './screens/GameOverScreen';
+import { useFullscreen } from './hooks/useFullscreen';
 
 function Router() {
   const { state, hasSavedGame, resumeGame, newGame } = useGame();
@@ -43,6 +44,8 @@ function Router() {
 }
 
 export default function App() {
+  useFullscreen();
+
   return (
     <GameProvider>
       <div className="h-full">

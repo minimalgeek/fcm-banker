@@ -1,0 +1,9 @@
+{
+  "name": "FCM Banker",
+  "short_name": "FCM Banker",
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a"
+}

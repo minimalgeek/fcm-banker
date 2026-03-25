@@ -49,7 +49,7 @@ export function GameScreen() {
   const showReserveReveal = state.stage === 2;
 
   return (
-    <div className="h-full grid grid-rows-[1fr] grid-cols-[minmax(160px,1fr)_minmax(200px,2fr)_minmax(160px,1fr)] overflow-hidden">
+    <div className="h-full grid grid-rows-[1fr] grid-cols-[minmax(180px,2fr)_minmax(200px,3fr)_minmax(180px,2fr)] overflow-hidden">
 
       {/* Left column */}
       <div className="flex flex-col gap-1 p-2 justify-center overflow-hidden">
@@ -104,8 +104,8 @@ export function GameScreen() {
           </div>
         )}
 
-        {/* Transaction log — only scrollable element */}
-        <div className="flex-1 min-h-0 mx-4 mb-2 bg-surface-raised rounded-lg border border-slate-800 overflow-hidden">
+        {/* Transaction log */}
+        <div className="min-h-0 mx-4 mb-2 bg-surface-raised rounded-lg border border-slate-800 overflow-hidden max-h-40">
           <TransactionLog transactions={state.transactions} players={state.players} />
         </div>
       </div>

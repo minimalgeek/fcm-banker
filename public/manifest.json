@@ -1,7 +1,7 @@
 {
   "name": "FCM Banker",
   "short_name": "FCM Banker",
-  "start_url": "/",
+  "start_url": "/fcm-banker",
   "display": "fullscreen",
   "orientation": "landscape",
   "background_color": "#0f172a",

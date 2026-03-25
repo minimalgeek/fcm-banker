@@ -9,7 +9,8 @@ export function GameOverScreen() {
     .sort((a, b) => b.cash - a.cash || a.turnOrder - b.turnOrder);
 
   return (
-    <div className="flex flex-col items-center justify-center h-full gap-8 p-8">
+    <div className="flex flex-col items-center gap-8 p-8 overflow-y-auto h-full">
+      <div className="my-auto flex flex-col items-center gap-8 w-full">
       <h1 className="text-4xl font-bold text-white">Game Over</h1>
       <p className="text-slate-400 text-lg">Stage 2 Bank has broken — Final Scores</p>
 
@@ -42,6 +43,7 @@ export function GameOverScreen() {
       >
         New Game
       </button>
+      </div>
     </div>
   );
 }

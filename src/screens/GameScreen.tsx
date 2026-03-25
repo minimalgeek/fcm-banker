@@ -53,7 +53,7 @@ export function GameScreen() {
     <div className="h-full grid grid-rows-[1fr] grid-cols-[minmax(160px,1fr)_minmax(200px,2fr)_minmax(160px,1fr)] overflow-hidden">
 
       {/* Left column */}
-      <div className="flex flex-col gap-2 p-2 justify-center overflow-hidden">
+      <div className="flex flex-col gap-1 p-2 justify-center overflow-hidden">
         {leftPlayers.map((p) => (
           <PlayerZone
             key={p.id}
@@ -107,7 +107,7 @@ export function GameScreen() {
       </div>
 
       {/* Right column */}
-      <div className="flex flex-col gap-2 p-2 justify-center overflow-hidden">
+      <div className="flex flex-col gap-1 p-2 justify-center overflow-hidden">
         {rightPlayers.map((p) => (
           <PlayerZone
             key={p.id}

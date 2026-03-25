@@ -58,7 +58,7 @@ export function PlayerZone({ player, dispatch, compact }: Props) {
             key={`+${d}`}
             onClick={() => handleTap(d)}
             className={`rounded-lg font-bold text-emerald-400 bg-emerald-950/60 hover:bg-emerald-900/80 active:scale-95 transition-all ${
-              compact ? 'py-2 text-sm' : 'py-3 text-base'
+              compact ? 'py-2 text-base' : 'py-4 text-lg'
             }`}
           >
             +{d}
@@ -69,7 +69,7 @@ export function PlayerZone({ player, dispatch, compact }: Props) {
             key={`-${d}`}
             onClick={() => handleTap(-d)}
             className={`rounded-lg font-bold text-red-400 bg-red-950/60 hover:bg-red-900/80 active:scale-95 transition-all ${
-              compact ? 'py-2 text-sm' : 'py-3 text-base'
+              compact ? 'py-2 text-base' : 'py-4 text-lg'
             }`}
           >
             -{d}

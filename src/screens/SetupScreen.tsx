@@ -23,7 +23,8 @@ export function SetupScreen() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-full gap-8 p-8 overflow-y-auto">
+    <div className="flex flex-col items-center h-full gap-8 p-8 overflow-y-auto">
+      <div className="my-auto flex flex-col items-center gap-8 w-full max-w-md">
       <h1 className="text-4xl font-bold text-white tracking-tight">
         Food Chain Magnate
       </h1>
@@ -79,6 +80,7 @@ export function SetupScreen() {
         >
           Continue to Reserve Selection
         </button>
+      </div>
       </div>
     </div>
   );

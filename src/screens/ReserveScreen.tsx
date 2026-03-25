@@ -27,7 +27,8 @@ export function ReserveScreen() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-full gap-8 p-8">
+    <div className="flex flex-col items-center h-full gap-8 p-8 overflow-y-auto">
+      <div className="my-auto flex flex-col items-center gap-8 w-full">
       <h2 className="text-2xl font-bold text-white">Secret Reserve Selection</h2>
       <p className="text-slate-400">
         Player {currentIndex + 1} of {state.players.length}
@@ -89,6 +90,7 @@ export function ReserveScreen() {
           </button>
         </div>
       )}
+      </div>
     </div>
   );
 }

@@ -8,7 +8,7 @@ export function BankStatus({ state }: Props) {
   const { stage, bankBalance, bankBroken } = state;
 
   return (
-    <div className="flex flex-col items-center gap-1 p-4">
+    <div className="flex flex-col items-center gap-1 p-3 shrink-0">
       <div className="text-sm font-medium text-slate-400 uppercase tracking-wider">
         Stage {stage} Bank
       </div>

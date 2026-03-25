@@ -1,7 +1,7 @@
 export type GamePhase = 'setup' | 'reserve-selection' | 'playing' | 'game-over';
 export type GameStage = 1 | 2;
 
-export const PLAYER_COLORS = ['green', 'blue', 'red', 'yellow', 'purple'] as const;
+export const PLAYER_COLORS = ['green', 'blue', 'red', 'yellow', 'purple', 'orange'] as const;
 export type PlayerColor = (typeof PLAYER_COLORS)[number];
 
 export const PLAYER_COLOR_HEX: Record<PlayerColor, string> = {
@@ -10,6 +10,7 @@ export const PLAYER_COLOR_HEX: Record<PlayerColor, string> = {
   red: '#ef4444',
   yellow: '#eab308',
   purple: '#a855f7',
+  orange: '#f97316',
 };
 
 export const RESERVE_OPTIONS = [100, 200, 300] as const;

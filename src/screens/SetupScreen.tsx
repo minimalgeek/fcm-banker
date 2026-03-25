@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useGame } from '../state/GameContext';
 import { PLAYER_COLORS, PLAYER_COLOR_HEX } from '../state/types';
 
-const DEFAULT_NAMES = ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'];
+const DEFAULT_NAMES = ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6'];
 
 export function SetupScreen() {
   const { dispatch } = useGame();
@@ -35,7 +35,7 @@ export function SetupScreen() {
             Number of Players
           </label>
           <div className="flex gap-2">
-            {[1, 2, 3, 4, 5].map((n) => (
+            {[1, 2, 3, 4, 5, 6].map((n) => (
               <button
                 key={n}
                 onClick={() => setPlayerCount(n)}

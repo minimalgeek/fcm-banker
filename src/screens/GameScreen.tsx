@@ -1,10 +1,34 @@
+import { useState, useEffect } from 'react';
 import { useGame } from '../state/GameContext';
-import { PlayerZone } from '../components/PlayerZone';
+import { PlayerZone, COOLDOWN_SEC } from '../components/PlayerZone';
 import { BankStatus } from '../components/BankStatus';
 import { TransactionLog } from '../components/TransactionLog';
 import { EndPhaseButton } from '../components/EndPhaseButton';
 import { UndoButton } from '../components/UndoButton';
 import { PLAYER_COLOR_HEX } from '../state/types';
+import type { Player, PendingBatch } from '../state/types';
+
+function CountdownTimer() {
+  const [countdown, setCountdown] = useState(COOLDOWN_SEC);
+  useEffect(() => {
+    const id = setInterval(() => {
+      setCountdown((c) => (c > 1 ? c - 1 : c));
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
+  return <>{countdown}</>;
+}
+
+function PendingCountdown({ player, batch }: { player: Player; batch: PendingBatch }) {
+  const color = PLAYER_COLOR_HEX[player.color];
+  const amt = batch.amount;
+  return (
+    <div className="text-xs text-center font-mono py-0.5" style={{ color }}>
+      {player.name}: {amt > 0 ? '+' : ''}{amt}$ in{' '}
+      <CountdownTimer key={amt} />..
+    </div>
+  );
+}
 
 export function GameScreen() {
   const { state, dispatch } = useGame();
@@ -45,20 +69,11 @@ export function GameScreen() {
       <div className="flex flex-col min-h-0 overflow-hidden">
         <BankStatus state={state} />
 
-        {/* Pending cooldown messages */}
         {Object.entries(pendingBatches).map(([playerId, batch]) => {
           if (!batch || batch.amount === 0) return null;
           const player = players.find((p) => p.id === playerId);
           if (!player) return null;
-          return (
-            <div
-              key={playerId}
-              className="text-center text-sm font-mono animate-pulse py-1"
-              style={{ color: PLAYER_COLOR_HEX[player.color] }}
-            >
-              {player.name}: {batch.amount > 0 ? '+' : ''}${batch.amount} pending
-            </div>
-          );
+          return <PendingCountdown key={playerId} player={player} batch={batch} />;
         })}
 
         <div className="flex items-center justify-center gap-3 px-4 py-1 shrink-0">

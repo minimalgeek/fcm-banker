@@ -1,18 +1,19 @@
 import { useRef, useCallback } from 'react';
-import type { Player, PendingBatch } from '../state/types';
+import type { Player } from '../state/types';
 import { DENOMINATIONS, PLAYER_COLOR_HEX } from '../state/types';
 import type { GameAction } from '../state/gameReducer';
 
-const DEBOUNCE_MS = 3000;
+export const COOLDOWN_SEC = 5;
+const DEBOUNCE_MS = COOLDOWN_SEC * 1000;
 
 interface Props {
   player: Player;
-  pending: PendingBatch | undefined;
+  pending?: unknown;
   dispatch: React.Dispatch<GameAction>;
   compact?: boolean;
 }
 
-export function PlayerZone({ player, pending, dispatch, compact }: Props) {
+export function PlayerZone({ player, dispatch, compact }: Props) {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const color = PLAYER_COLOR_HEX[player.color];
 
@@ -28,8 +29,6 @@ export function PlayerZone({ player, pending, dispatch, compact }: Props) {
     dispatch({ type: 'ADD_PENDING', playerId: player.id, amount });
     scheduleBatch();
   }
-
-  const pendingAmount = pending?.amount ?? 0;
 
   return (
     <div

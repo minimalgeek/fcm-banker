@@ -59,15 +59,27 @@ function commitBatch(
   let newBankBalance = state.bankBalance;
   let bankBroken = state.bankBroken;
   let boxMoney = 0;
+  let newStage = state.stage;
+  let newCeoSlots = state.ceoSlots;
+  let reserveOpened = false;
+  let reserveTotal = 0;
 
   if (amount > 0) {
-    // Income: deduct from bank
-    const bankDeduction = Math.min(amount, Math.max(0, newBankBalance));
-    boxMoney = amount - bankDeduction;
-    newBankBalance -= bankDeduction;
+    newBankBalance -= amount;
 
-    if (newBankBalance <= 0 && !bankBroken) {
-      bankBroken = true;
+    // First break (stage 1): open reserves and add them to the bank
+    if (newBankBalance <= 0 && !bankBroken && newStage === 1) {
+      reserveTotal = state.players.reduce((sum, p) => sum + (p.reserve ?? 0), 0);
+      newBankBalance += reserveTotal;
+      reserveOpened = true;
+      newStage = 2;
+      newCeoSlots = determineCeoSlots(state.players);
+    }
+
+    if (newBankBalance <= 0) {
+      boxMoney = -newBankBalance;
+      newBankBalance = 0;
+      if (!bankBroken) bankBroken = true;
     }
   } else {
     // Expense: money goes back to bank (only if not broken)
@@ -84,8 +96,9 @@ function commitBatch(
     playerName: player.name,
     amount,
     timestamp: Date.now(),
-    stage: state.stage,
+    stage: newStage,
     boxMoney,
+    ...(reserveOpened && { reserveOpened, reserveTotal }),
   };
 
   const updatedPlayers = state.players.map((p) =>
@@ -96,6 +109,8 @@ function commitBatch(
 
   return {
     ...state,
+    stage: newStage,
+    ceoSlots: newCeoSlots,
     bankBalance: newBankBalance,
     bankBroken,
     players: updatedPlayers,
@@ -114,20 +129,25 @@ function undoTransaction(state: GameState): GameState {
 
   const reversedAmount = -lastTx.amount;
   let newBankBalance = state.bankBalance;
+  let newStage = state.stage;
+  let newCeoSlots = state.ceoSlots;
 
   if (lastTx.amount > 0) {
-    // Was income: return money to bank (minus box money which came from infinite supply)
     const bankPortion = lastTx.amount - lastTx.boxMoney;
     newBankBalance += bankPortion;
+
+    // Revert the reserve opening if this tx triggered it
+    if (lastTx.reserveOpened && lastTx.reserveTotal) {
+      newBankBalance -= lastTx.reserveTotal;
+      newStage = 1;
+      newCeoSlots = 3;
+    }
   } else {
-    // Was expense: take money back from bank
     if (newBankBalance + lastTx.amount >= 0) {
-      newBankBalance += lastTx.amount; // amount is negative
+      newBankBalance += lastTx.amount;
     }
   }
 
-  // Recalculate bankBroken based on current state
-  // If we reversed an income that broke the bank and balance is now positive, unbreak
   let bankBroken = state.bankBroken;
   if (newBankBalance > 0) {
     bankBroken = false;
@@ -139,6 +159,8 @@ function undoTransaction(state: GameState): GameState {
 
   return {
     ...state,
+    stage: newStage,
+    ceoSlots: newCeoSlots,
     bankBalance: newBankBalance,
     bankBroken,
     players: updatedPlayers,

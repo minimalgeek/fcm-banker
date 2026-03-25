@@ -53,6 +53,9 @@ export function TransactionLog({ transactions, players }: Props) {
               }`}
             >
               {isIncome ? '+' : ''}${tx.amount}
+              {tx.reserveOpened && (
+                <span className="text-xs text-amber-400 ml-1">(+${tx.reserveTotal} reserves)</span>
+              )}
               {tx.boxMoney > 0 && (
                 <span className="text-xs text-amber-400 ml-1">(box ${tx.boxMoney})</span>
               )}

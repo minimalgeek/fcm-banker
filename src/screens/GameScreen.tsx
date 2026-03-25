@@ -46,8 +46,7 @@ export function GameScreen() {
   const n = players.length;
   const compact = n >= 4;
 
-  // Show reserve reveal after stage 2 is created
-  const showReserveReveal = state.stage === 2 && state.transactions.length === 0;
+  const showReserveReveal = state.stage === 2;
 
   return (
     <div className="h-full grid grid-rows-[1fr] grid-cols-[minmax(160px,1fr)_minmax(200px,2fr)_minmax(160px,1fr)] overflow-hidden">
@@ -84,7 +83,7 @@ export function GameScreen() {
         {showReserveReveal && (
           <div className="mx-4 mb-2 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg shrink-0">
             <div className="text-center text-sm font-bold text-amber-400 mb-2">
-              Reserves Revealed — Stage 2 Bank Created
+              Reserves Opened
             </div>
             <div className="flex justify-center gap-4">
               {state.players.map((p) => (

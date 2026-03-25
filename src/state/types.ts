@@ -40,6 +40,8 @@ export interface Transaction {
   timestamp: number;
   stage: GameStage;
   boxMoney: number;
+  reserveOpened?: boolean;
+  reserveTotal?: number;
 }
 
 export interface PendingBatch {

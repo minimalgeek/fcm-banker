@@ -57,7 +57,7 @@ export function PlayerZone({ player, dispatch, tight }: Props) {
 
   return (
     <div
-      className={`flex flex-col rounded-xl border-2 overflow-hidden ${tight ? 'gap-0.5 p-1.5' : 'gap-2 p-3'}`}
+      className={`flex flex-col rounded-xl border-2 overflow-hidden flex-1 min-h-0 ${tight ? 'gap-0.5 p-1.5' : 'gap-2 p-3'}`}
       style={{ borderColor: color, backgroundColor: `${color}10` }}
     >
       {/* Header */}
@@ -124,13 +124,13 @@ export function PlayerZone({ player, dispatch, tight }: Props) {
           </button>
         </form>
       ) : (
-        <div className={`grid grid-cols-4 ${tight ? 'gap-0.5' : 'gap-1.5'}`}>
+        <div className={`grid grid-cols-4 grid-rows-2 flex-1 min-h-0 ${tight ? 'gap-0.5' : 'gap-1.5'}`}>
           {DENOMINATIONS.map((d) => (
             <button
               key={`+${d}`}
               onClick={() => handleTap(d)}
-              className={`rounded-lg font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-700/50 hover:bg-emerald-900/80 hover:border-emerald-500/70 active:scale-95 transition-all ${
-                tight ? 'py-1.5 text-sm' : 'py-4 text-lg'
+              className={`rounded-lg font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-700/50 hover:bg-emerald-900/80 hover:border-emerald-500/70 active:scale-95 transition-all flex items-center justify-center ${
+                tight ? 'text-sm' : 'text-lg'
               }`}
             >
               +{d}
@@ -140,8 +140,8 @@ export function PlayerZone({ player, dispatch, tight }: Props) {
             <button
               key={`-${d}`}
               onClick={() => handleTap(-d)}
-              className={`rounded-lg font-bold text-red-400 bg-red-950/60 border border-red-700/50 hover:bg-red-900/80 hover:border-red-500/70 active:scale-95 transition-all ${
-                tight ? 'py-1.5 text-sm' : 'py-4 text-lg'
+              className={`rounded-lg font-bold text-red-400 bg-red-950/60 border border-red-700/50 hover:bg-red-900/80 hover:border-red-500/70 active:scale-95 transition-all flex items-center justify-center ${
+                tight ? 'text-sm' : 'text-lg'
               }`}
             >
               -{d}

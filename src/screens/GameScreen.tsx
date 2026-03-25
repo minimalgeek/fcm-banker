@@ -43,8 +43,7 @@ export function GameScreen() {
     else rightPlayers.push(p);
   });
 
-  const n = players.length;
-  const compact = n >= 4;
+  const tight = players.length >= 5;
 
   const showReserveReveal = state.stage === 2;
 
@@ -59,7 +58,7 @@ export function GameScreen() {
             player={p}
             pending={pendingBatches[p.id]}
             dispatch={dispatch}
-            compact={compact}
+            tight={tight}
           />
         ))}
       </div>
@@ -118,7 +117,7 @@ export function GameScreen() {
             player={p}
             pending={pendingBatches[p.id]}
             dispatch={dispatch}
-            compact={compact}
+            tight={tight}
           />
         ))}
       </div>

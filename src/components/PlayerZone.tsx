@@ -10,10 +10,10 @@ interface Props {
   player: Player;
   pending?: unknown;
   dispatch: React.Dispatch<GameAction>;
-  compact?: boolean;
+  tight?: boolean;
 }
 
-export function PlayerZone({ player, dispatch, compact }: Props) {
+export function PlayerZone({ player, dispatch, tight }: Props) {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const color = PLAYER_COLOR_HEX[player.color];
@@ -57,7 +57,7 @@ export function PlayerZone({ player, dispatch, compact }: Props) {
 
   return (
     <div
-      className={`flex flex-col rounded-xl border-2 overflow-hidden ${compact ? 'gap-1 p-2' : 'gap-2 p-3'}`}
+      className={`flex flex-col rounded-xl border-2 overflow-hidden ${tight ? 'gap-0.5 p-1.5' : 'gap-2 p-3'}`}
       style={{ borderColor: color, backgroundColor: `${color}10` }}
     >
       {/* Header */}
@@ -67,7 +67,7 @@ export function PlayerZone({ player, dispatch, compact }: Props) {
             className="w-4 h-4 rounded-full shrink-0"
             style={{ backgroundColor: color }}
           />
-          <span className={`font-bold text-white truncate ${compact ? 'text-sm' : 'text-base'}`}>
+          <span className={`font-bold text-white truncate ${tight ? 'text-sm' : 'text-base'}`}>
             {player.name}
           </span>
           <button
@@ -78,7 +78,7 @@ export function PlayerZone({ player, dispatch, compact }: Props) {
             #
           </button>
         </div>
-        <span className={`font-mono font-bold text-white ${compact ? 'text-lg' : 'text-2xl'}`}>
+        <span className={`font-mono font-bold text-white ${tight ? 'text-lg' : 'text-2xl'}`}>
           ${player.cash}
         </span>
       </div>
@@ -124,13 +124,13 @@ export function PlayerZone({ player, dispatch, compact }: Props) {
           </button>
         </form>
       ) : (
-        <div className={`grid grid-cols-4 ${compact ? 'gap-1' : 'gap-1.5'}`}>
+        <div className={`grid grid-cols-4 ${tight ? 'gap-0.5' : 'gap-1.5'}`}>
           {DENOMINATIONS.map((d) => (
             <button
               key={`+${d}`}
               onClick={() => handleTap(d)}
               className={`rounded-lg font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-700/50 hover:bg-emerald-900/80 hover:border-emerald-500/70 active:scale-95 transition-all ${
-                compact ? 'py-3 text-base' : 'py-4 text-lg'
+                tight ? 'py-1.5 text-sm' : 'py-4 text-lg'
               }`}
             >
               +{d}
@@ -141,7 +141,7 @@ export function PlayerZone({ player, dispatch, compact }: Props) {
               key={`-${d}`}
               onClick={() => handleTap(-d)}
               className={`rounded-lg font-bold text-red-400 bg-red-950/60 border border-red-700/50 hover:bg-red-900/80 hover:border-red-500/70 active:scale-95 transition-all ${
-                compact ? 'py-3 text-base' : 'py-4 text-lg'
+                tight ? 'py-1.5 text-sm' : 'py-4 text-lg'
               }`}
             >
               -{d}

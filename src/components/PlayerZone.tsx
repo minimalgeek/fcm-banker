@@ -52,13 +52,6 @@ export function PlayerZone({ player, pending, dispatch, compact }: Props) {
         </span>
       </div>
 
-      {/* Pending indicator */}
-      {pendingAmount !== 0 && (
-        <div className="text-center text-sm font-mono text-slate-400 animate-pulse">
-          {pendingAmount > 0 ? '+' : ''}${pendingAmount} pending
-        </div>
-      )}
-
       {/* Buttons */}
       <div className={`grid grid-cols-4 ${compact ? 'gap-1' : 'gap-1.5'}`}>
         {DENOMINATIONS.map((d) => (

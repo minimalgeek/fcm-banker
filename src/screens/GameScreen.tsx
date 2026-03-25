@@ -12,43 +12,22 @@ export function GameScreen() {
 
   const leftPlayers: typeof players = [];
   const rightPlayers: typeof players = [];
-  const bottomPlayers: typeof players = [];
 
-  // Distribute players around edges
+  // Odd players (1st, 3rd, 5th) left, even players (2nd, 4th) right
+  players.forEach((p, i) => {
+    if (i % 2 === 0) leftPlayers.push(p);
+    else rightPlayers.push(p);
+  });
+
   const n = players.length;
-  if (n === 1) {
-    leftPlayers.push(players[0]);
-  } else if (n === 2) {
-    leftPlayers.push(players[0]);
-    rightPlayers.push(players[1]);
-  } else if (n === 3) {
-    leftPlayers.push(players[0]);
-    rightPlayers.push(players[1]);
-    bottomPlayers.push(players[2]);
-  } else if (n === 4) {
-    leftPlayers.push(players[0], players[1]);
-    rightPlayers.push(players[2], players[3]);
-  } else if (n === 5) {
-    leftPlayers.push(players[0], players[1]);
-    rightPlayers.push(players[2], players[3]);
-    bottomPlayers.push(players[4]);
-  }
-
   const compact = n >= 4;
 
   // Show reserve reveal after stage 2 is created
   const showReserveReveal = state.stage === 2 && state.transactions.length === 0;
 
-  const hasBottom = bottomPlayers.length > 0;
-
   return (
-    <div
-      className={`h-full grid ${
-        hasBottom
-          ? 'grid-rows-[1fr_auto] grid-cols-[minmax(160px,1fr)_minmax(200px,2fr)_minmax(160px,1fr)]'
-          : 'grid-rows-[1fr] grid-cols-[minmax(160px,1fr)_minmax(200px,2fr)_minmax(160px,1fr)]'
-      } overflow-hidden`}
-    >
+    <div className="h-full grid grid-rows-[1fr] grid-cols-[minmax(160px,1fr)_minmax(200px,2fr)_minmax(160px,1fr)] overflow-hidden">
+
       {/* Left column */}
       <div className="flex flex-col gap-2 p-2 justify-center overflow-hidden">
         {leftPlayers.map((p) => (
@@ -65,6 +44,22 @@ export function GameScreen() {
       {/* Center column */}
       <div className="flex flex-col min-h-0 overflow-hidden">
         <BankStatus state={state} />
+
+        {/* Pending cooldown messages */}
+        {Object.entries(pendingBatches).map(([playerId, batch]) => {
+          if (!batch || batch.amount === 0) return null;
+          const player = players.find((p) => p.id === playerId);
+          if (!player) return null;
+          return (
+            <div
+              key={playerId}
+              className="text-center text-sm font-mono animate-pulse py-1"
+              style={{ color: PLAYER_COLOR_HEX[player.color] }}
+            >
+              {player.name}: {batch.amount > 0 ? '+' : ''}${batch.amount} pending
+            </div>
+          );
+        })}
 
         <div className="flex items-center justify-center gap-3 px-4 py-1 shrink-0">
           <UndoButton undoStack={state.undoStack} dispatch={dispatch} />
@@ -109,22 +104,6 @@ export function GameScreen() {
         ))}
       </div>
 
-      {/* Bottom row — spans all 3 columns */}
-      {hasBottom && (
-        <div className="col-span-3 flex justify-center p-2 pt-0">
-          <div className="w-full max-w-sm">
-            {bottomPlayers.map((p) => (
-              <PlayerZone
-                key={p.id}
-                player={p}
-                pending={pendingBatches[p.id]}
-                dispatch={dispatch}
-                compact={compact}
-              />
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

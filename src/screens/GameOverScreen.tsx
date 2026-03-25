@@ -1,10 +1,12 @@
 import { useGame } from '../state/GameContext';
-import { PLAYER_COLOR_HEX } from '../state/types';
+import { PLAYER_COLOR_HEX, RESERVE_CARD_SLOTS, type ReserveChoice } from '../state/types';
 
 export function GameOverScreen() {
   const { state, newGame } = useGame();
 
-  const sorted = [...state.players].sort((a, b) => b.cash - a.cash);
+  const sorted = [...state.players]
+    .map((p, i) => ({ ...p, turnOrder: i }))
+    .sort((a, b) => b.cash - a.cash || a.turnOrder - b.turnOrder);
 
   return (
     <div className="flex flex-col items-center justify-center h-full gap-8 p-8">
@@ -23,7 +25,9 @@ export function GameOverScreen() {
             </div>
             <div className="flex-1">
               <div className="font-bold text-white text-lg">{player.name}</div>
-              <div className="text-sm text-slate-400">Reserve: ${player.reserve}</div>
+              <div className="text-sm text-slate-400">
+                Reserve: ${player.reserve} · {RESERVE_CARD_SLOTS[player.reserve as ReserveChoice]} slots
+              </div>
             </div>
             <div className="text-3xl font-mono font-bold text-bank-gold">
               ${player.cash}

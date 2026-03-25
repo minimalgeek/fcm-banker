@@ -5,12 +5,15 @@ interface Props {
 }
 
 export function BankStatus({ state }: Props) {
-  const { stage, bankBalance, bankBroken } = state;
+  const { stage, bankBalance, bankBroken, ceoSlots } = state;
 
   return (
     <div className="flex flex-col items-center gap-1 p-3 shrink-0">
       <div className="text-sm font-medium text-slate-400 uppercase tracking-wider">
         Stage {stage} Bank
+        {stage === 2 && (
+          <span className="ml-2 text-amber-400">· {ceoSlots} CEO slots</span>
+        )}
       </div>
       <div
         className={`text-4xl font-mono font-bold ${

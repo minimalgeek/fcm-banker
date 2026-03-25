@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useGame } from '../state/GameContext';
-import { RESERVE_OPTIONS, PLAYER_COLOR_HEX, type ReserveChoice } from '../state/types';
+import { RESERVE_OPTIONS, RESERVE_CARD_SLOTS, PLAYER_COLOR_HEX, type ReserveChoice } from '../state/types';
 
 export function ReserveScreen() {
   const { state, dispatch } = useGame();
@@ -72,6 +72,7 @@ export function ReserveScreen() {
                 }`}
               >
                 <span className="text-3xl">${val}</span>
+                <span className="text-xs opacity-70">{RESERVE_CARD_SLOTS[val]} slots</span>
               </button>
             ))}
           </div>

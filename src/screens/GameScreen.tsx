@@ -5,8 +5,8 @@ import { BankStatus } from '../components/BankStatus';
 import { TransactionLog } from '../components/TransactionLog';
 import { EndPhaseButton } from '../components/EndPhaseButton';
 import { UndoButton } from '../components/UndoButton';
-import { PLAYER_COLOR_HEX } from '../state/types';
-import type { Player, PendingBatch } from '../state/types';
+import { PLAYER_COLOR_HEX, RESERVE_CARD_SLOTS } from '../state/types';
+import type { Player, PendingBatch, ReserveChoice } from '../state/types';
 
 function CountdownTimer() {
   const [countdown, setCountdown] = useState(COOLDOWN_SEC);
@@ -93,9 +93,14 @@ export function GameScreen() {
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: PLAYER_COLOR_HEX[p.color] }}
                   />
-                  <span className="text-white font-semibold">${p.reserve}</span>
+                  <span className="text-white font-semibold">
+                    ${p.reserve} / {RESERVE_CARD_SLOTS[p.reserve as ReserveChoice]} slots
+                  </span>
                 </div>
               ))}
+            </div>
+            <div className="text-center text-xs text-amber-300 mt-2">
+              All CEOs now have {state.ceoSlots} slots
             </div>
           </div>
         )}

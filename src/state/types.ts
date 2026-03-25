@@ -15,6 +15,12 @@ export const PLAYER_COLOR_HEX: Record<PlayerColor, string> = {
 export const RESERVE_OPTIONS = [100, 200, 300] as const;
 export type ReserveChoice = (typeof RESERVE_OPTIONS)[number];
 
+export const RESERVE_CARD_SLOTS: Record<ReserveChoice, 2 | 3 | 4> = {
+  100: 2,
+  200: 3,
+  300: 4,
+};
+
 export const DENOMINATIONS = [1, 5, 10, 50] as const;
 export type Denomination = (typeof DENOMINATIONS)[number];
 
@@ -46,6 +52,7 @@ export interface GameState {
   stage: GameStage;
   bankBalance: number;
   bankBroken: boolean;
+  ceoSlots: number;
   players: Player[];
   reservePlayerIndex: number;
   transactions: Transaction[];
@@ -58,6 +65,7 @@ export const INITIAL_STATE: GameState = {
   stage: 1,
   bankBalance: 0,
   bankBroken: false,
+  ceoSlots: 3,
   players: [],
   reservePlayerIndex: 0,
   transactions: [],

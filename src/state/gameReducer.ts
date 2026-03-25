@@ -6,7 +6,7 @@ import type {
   ReserveChoice,
   PlayerColor,
 } from './types';
-import { INITIAL_STATE, PLAYER_COLORS } from './types';
+import { INITIAL_STATE, PLAYER_COLORS, RESERVE_CARD_SLOTS } from './types';
 
 // --- Actions ---
 
@@ -147,6 +147,26 @@ function undoTransaction(state: GameState): GameState {
   };
 }
 
+function determineCeoSlots(players: Player[]): number {
+  const freq: Record<number, number> = {};
+  for (const p of players) {
+    if (p.reserve == null) continue;
+    const slots = RESERVE_CARD_SLOTS[p.reserve];
+    freq[slots] = (freq[slots] || 0) + 1;
+  }
+
+  let bestSlots = 3;
+  let bestCount = 0;
+  for (const [slotsStr, count] of Object.entries(freq)) {
+    const slots = Number(slotsStr);
+    if (count > bestCount || (count === bestCount && slots > bestSlots)) {
+      bestCount = count;
+      bestSlots = slots;
+    }
+  }
+  return bestSlots;
+}
+
 function endPhase(state: GameState): GameState {
   if (state.stage === 1 && state.bankBroken) {
     const totalReserves = state.players.reduce(
@@ -158,6 +178,7 @@ function endPhase(state: GameState): GameState {
       stage: 2,
       bankBalance: totalReserves,
       bankBroken: false,
+      ceoSlots: determineCeoSlots(state.players),
     };
   }
   if (state.stage === 2 && state.bankBroken) {

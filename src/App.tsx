@@ -4,6 +4,7 @@ import { ReserveScreen } from './screens/ReserveScreen';
 import { GameScreen } from './screens/GameScreen';
 import { GameOverScreen } from './screens/GameOverScreen';
 import { useFullscreen } from './hooks/useFullscreen';
+import { useWakeLock } from './hooks/useWakeLock';
 
 function Router() {
   const { state, hasSavedGame, resumeGame, newGame } = useGame();
@@ -45,6 +46,7 @@ function Router() {
 
 export default function App() {
   useFullscreen();
+  useWakeLock();
 
   return (
     <GameProvider>
